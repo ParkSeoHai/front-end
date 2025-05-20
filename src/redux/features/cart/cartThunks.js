@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const BASE_URL = "https://back-end-gray-pi.vercel.app//api";
+const BASE_URL = "https://back-end-gray-pi.vercel.app/api";
 
 export const fetchCart = createAsyncThunk(
   "cart/fetchCart",

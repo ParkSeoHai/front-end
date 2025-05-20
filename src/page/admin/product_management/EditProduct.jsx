@@ -111,7 +111,7 @@ const EditProduct = () => {
 
         if (productData.HinhAnh && productData.HinhAnh.length > 0) {
           const imageUrls = productData.HinhAnh.map(
-            (img) => `https://back-end-gray-pi.vercel.app/${img}`
+            (img) => `https://back-end-gray-pi.vercel.app${img}`
           );
           setExistingImages(productData.HinhAnh);
           setPreviewUrls(imageUrls);
