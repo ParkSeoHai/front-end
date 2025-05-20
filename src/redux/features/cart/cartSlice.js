@@ -35,7 +35,7 @@ const cartSlice = createSlice({
     builder
       .addCase(fetchCart.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.cartItems = action.payload.DanhSachSanPham;
+        state.cartItems = action.payload?.DanhSachSanPham;
         state.discount = action.payload.GiamGia;
         state.subTotal = action.payload.TamTinh;
         state.totalAmount = action.payload.TongTien;
@@ -121,7 +121,7 @@ const cartSlice = createSlice({
       })
       .addCase(removeAllFromCart.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.cartItems = action.payload.DanhSachSanPham;
+        state.cartItems = action.payload?.DanhSachSanPham;
         state.totalAmount = state.cartItems.reduce((total, item) => 
           total + (item.GiaSanPham * item.SoLuong), 0
         );
