@@ -141,7 +141,7 @@ const Cart = () => {
                     <TableRow key={`${cartItem.idSanPham}-${cartItem.KichThuoc.TenKichThuoc}`}>
                       <TableCell>
                         <img
-                          src={`http://localhost:8080${cartItem?.HinhAnh}`}
+                          src={`https://back-end-gray-pi.vercel.app/${cartItem?.HinhAnh}`}
                           alt={cartItem?.TenSanPham}
                           width={80}
                           height={80}

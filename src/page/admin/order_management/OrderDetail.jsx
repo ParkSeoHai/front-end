@@ -119,7 +119,7 @@ const OrderDetail = () => {
                       <TableCell>
                         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                           <img
-                            src={`http://localhost:8080${item.HinhAnh}`}
+                            src={`https://back-end-gray-pi.vercel.app/${item.HinhAnh}`}
                             alt={item.TenSanPham}
                             style={{ width: 50, height: 50, objectFit: 'cover' }}
                           />

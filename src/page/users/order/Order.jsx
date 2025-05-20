@@ -195,7 +195,7 @@ const Order = () => {
                         }}
                       >
                         <img
-                          src={`http://localhost:8080${product.HinhAnh}`}
+                          src={`https://back-end-gray-pi.vercel.app/${product.HinhAnh}`}
                           alt={product.TenSanPham}
                           style={{
                             width: 80,

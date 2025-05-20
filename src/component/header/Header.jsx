@@ -599,7 +599,7 @@ const Header = () => {
                       >
                         <Box sx={{ width: 80, height: 80, flexShrink: 0 }}>
                           <img
-                            src={`http://localhost:8080${item.HinhAnh}`}
+                            src={`https://back-end-gray-pi.vercel.app/${item.HinhAnh}`}
                             alt={item.TenSanPham}
                             style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                           />
