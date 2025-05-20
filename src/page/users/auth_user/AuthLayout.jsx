@@ -13,7 +13,7 @@ const AuthLayout = () => {
         flex: '0 0 60%',
         order: 2,
         display: { xs: 'none', md: 'block' },
-        backgroundImage: 'url("../../../../public/image/login_background.jpg")',
+        backgroundImage: 'url("..//image/login_background.jpg")',
         backgroundSize: 'cover',
         backgroundPosition: 'center'
       }} />

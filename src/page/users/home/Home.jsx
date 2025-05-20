@@ -60,13 +60,13 @@ const Home = () => {
       <Box className="relative" sx={{ margin: "0 auto" }}>
         <Slider {...settings}>
           <div>
-            <img src="../../../../public/image/poster_1.jpg" alt="Slide 1" />
+            <img src="..//image/poster_1.jpg" alt="Slide 1" />
           </div>
           <div>
-            <img src="../../../../public/image/poster_2.jpg" alt="Slide 2" />
+            <img src="..//image/poster_2.jpg" alt="Slide 2" />
           </div>
           <div>
-            <img src="../../../../public/image/poster_3.jpg" alt="Slide 3" />
+            <img src="..//image/poster_3.jpg" alt="Slide 3" />
           </div>
         </Slider>
         <SearchForm />

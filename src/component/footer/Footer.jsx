@@ -94,7 +94,7 @@ const Footer = () => {
             Liên hệ hợp tác kinh doanh
           </Link>
           <Box component="img" 
-            src="../../../public/image/image-footer-1.png" 
+            src="/image/image-footer-1.png" 
             alt="Đã thông báo Bộ Công Thương"
             sx={{ 
               width: 150,

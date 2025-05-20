@@ -274,7 +274,7 @@ const Header = () => {
               }}
             >
               <img
-                src="../../../public/image/logo_main.jpg"
+                src="/image/logo_main.jpg"
                 width={77}
                 height={44}
               />
@@ -359,7 +359,7 @@ const Header = () => {
               }}
             >
               <img
-                src="../../../public/image/20240805_KnfT1Dl0.png"
+                src="/image/20240805_KnfT1Dl0.png"
                 width={61}
                 height={38}
               />
