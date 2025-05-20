@@ -1,0 +1,23 @@
+.custom-textfield {
+    background-color: transparent;
+    color: #000;
+    width: 100%;
+  }
+  .custom-textfield .MuiOutlinedInput-root {
+    & fieldset {
+      border-color: transparent;
+    }
+    &:hover fieldset {
+      border-color: transparent; /* Remove hover border color */
+    }
+    &.Mui-focused fieldset {
+      border-color: transparent; /* Remove focus border color */
+    }
+  }
+  
+  .custom-button {
+    background-color: #303030;
+    padding: 0 15px;
+    border-radius: 0 4px 4px 0;
+    font-size: 12px;
+  }
