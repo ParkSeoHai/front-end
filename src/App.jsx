@@ -1,7 +1,6 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import ProtectedAdminLayout from "./layouts/ProtectedAdminLayout";
 import UserLayout from "./page/users/UserLayout";
-import AdminLayout from "./page/admin/AdminLayout";
 import AddPromotion from "./page/admin/promotion_management/AddPromotion";
 import EditPromotion from "./page/admin/promotion_management/EditPromotion";
 import AddSupplier from "./page/admin/supplier_management/AddSupplier";
@@ -146,7 +145,6 @@ function App() {
           <Route path="export" element={<WarehouseForm />} />
           <Route path=":id" element={<WarehouseDetail />} />
         </Route>
-        // Trong phần routes
         <Route path="/admin/profile" element={<ProfileAdmin />} />
         <Route path="/admin/settings" element={<Settings />} />
       </Route>
