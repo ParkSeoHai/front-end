@@ -4,14 +4,11 @@ import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import StarIcon from "@mui/icons-material/Star";
 import { ToastContainer, toast } from 'react-toastify';
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useProduct } from "../../../hooks/useProduct";
 import { useCart } from "../../../hooks/useCart";
 import { useAuth } from "../../../hooks/useAuth";
-import ProductTemplate from "../../../components/templates/ProductTemplate";
-import ProductItem from "../../../component/main_component/ProductItem";
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -177,7 +174,7 @@ const ProductDetail = () => {
                   onClick={() => setMainImage(image)}
                 >
                   <img
-                    src={`https://back-end-gray-pi.vercel.app${image}`}
+                    src={`http://https://back-end-gray-pi.vercel.app:8080${image}`}
                     alt={`Product thumbnail ${index + 1}`}
                     style={{
                       width: "100%",
@@ -196,7 +193,7 @@ const ProductDetail = () => {
             }}>
               {mainImage && (
                 <img
-                  src={`https://back-end-gray-pi.vercel.app${mainImage}`}
+                  src={`http://https://back-end-gray-pi.vercel.app:8080${mainImage}`}
                   alt="Main product image"
                   style={{
                     width: "100%",
@@ -517,7 +514,7 @@ const ProductDetail = () => {
               <Box sx={{ p: 2, borderTop: "1px solid #ddd" }}>
                 <Box
                   component="img"
-                  src="..//image/size.jpg"
+                  src="/public/image/size.jpg"
                   alt="Bảng size chart"
                   sx={{
                     width: "100%",

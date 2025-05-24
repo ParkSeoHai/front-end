@@ -127,7 +127,7 @@ export const updateProduct = createAsyncThunk(
               return imagePath;
             }
             // Convert URL to base64
-            const response = await fetch(`https://back-end-gray-pi.vercel.app${imagePath}`);
+            const response = await fetch(`http://https://back-end-gray-pi.vercel.app:8080${imagePath}`);
             const blob = await response.blob();
             return new Promise((resolve, reject) => {
               const reader = new FileReader();

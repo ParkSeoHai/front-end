@@ -71,96 +71,6 @@ const Footer = () => {
           >
             Hệ thống cửa hàng
           </Link>
-          <Link 
-            component="button"
-            onClick={() => navigate('/recruitment')}
-            sx={{ 
-            display: { xs: 'none', sm: 'block' }, // Ẩn trên mobile
-            color: '#fff', 
-            textDecoration: 'none', 
-            mb: 1,
-            '&:hover': { color: '#ccc' }
-          }}
-          >
-            Thông tin tuyển dụng
-          </Link>
-          <Link 
-            component="button"
-            onClick={() => navigate('/business')}
-            sx={{ 
-            display: { xs: 'none', sm: 'block' }, // Ẩn trên mobile
-            color: '#fff', 
-            textDecoration: 'none', 
-            mb: 1,
-            '&:hover': { color: '#ccc' }
-          }}
-          >
-            Liên hệ hợp tác kinh doanh
-          </Link>
-          
-          <Box component="img" 
-            src="/image/image-footer-1.png" 
-            alt="Đã thông báo Bộ Công Thương"
-            sx={{ 
-            width: 150,
-            mt: 2,
-            display: { xs: 'none', sm: 'block' } // Ẩn trên mobile
-          }}
-          />
-          
-          <Link 
-            href="https://youtube.com" 
-            target="_blank"
-            sx={{ 
-            display: { xs: 'none', sm: 'flex' }, // Ẩn trên mobile
-            alignItems: 'center',
-            color: '#fff', 
-            textDecoration: 'none', 
-            mb: 1,
-            '&:hover': { color: '#ccc' }
-          }}
-          >
-            <YouTubeIcon sx={{ mr: 1 }} /> Youtube
-          </Link>
-          <Link 
-            component="button"
-            onClick={() => navigate('/loyalty-policy')}
-            sx={{ 
-            display: { xs: 'none', sm: 'block' }, // Ẩn trên mobile
-            color: '#fff', 
-            textDecoration: 'none', 
-            mb: 1,
-            '&:hover': { color: '#ccc' }
-          }}
-          >
-            Chính sách tích điểm
-          </Link>
-          <Link 
-            component="button"
-            onClick={() => navigate('/return-policy')}
-            sx={{ 
-              display: 'block', 
-              color: '#fff', 
-              textDecoration: 'none', 
-              mb: 1,
-              '&:hover': { color: '#ccc' }
-            }}
-          >
-            Chính sách đổi trả
-          </Link>
-          <Link 
-            component="button"
-            onClick={() => navigate('/warranty-policy')}
-            sx={{ 
-              display: 'block', 
-              color: '#fff', 
-              textDecoration: 'none', 
-              mb: 1,
-              '&:hover': { color: '#ccc' }
-            }}
-          >
-            Chế độ bảo hành trọn đời
-          </Link>
         </Box>
 
         {/* CHÍNH SÁCH Column */}
@@ -215,28 +125,14 @@ const Footer = () => {
             THÔNG TIN LIÊN HỆ
           </Typography>
           <Typography sx={{ mb: 1 }}>
-            Hotline: 1900 1234
+            Hotline: 0865005580
           </Typography>
           <Typography sx={{ mb: 1 }}>
-            Email: support@fdsshop.vn
+            Email: maiphuongbui26@gmail.com
           </Typography>
           <Typography sx={{ mb: 1 }}>
-            Địa chỉ: 123 Đường ABC, Quận XYZ, TP.HCM
+            Địa chỉ: Trịnh Văn Bô, Nam Từ Liêm, Hà Nội
           </Typography>
-          <Link 
-            href="https://youtube.com" 
-            target="_blank"
-            sx={{ 
-              display: 'flex',
-              alignItems: 'center',
-              color: '#fff', 
-              textDecoration: 'none', 
-              mb: 1,
-              '&:hover': { color: '#ccc' }
-            }}
-          >
-            <YouTubeIcon sx={{ mr: 1 }} /> Youtube
-          </Link>
         </Box>
 
         {/* ĐĂNG KÝ MAIL Column */}
@@ -272,14 +168,6 @@ const Footer = () => {
           }}>
             Bằng cách nhấp vào nút Đăng ký, bạn đồng ý với Chính sách bảo mật và cookie của chúng tôi.
           </Typography>
-          <Box component="img" 
-            src="/image/image-footer-1.png" 
-            alt="Đã thông báo Bộ Công Thương"
-            sx={{ 
-              width: 150,
-              mt: 2
-            }}
-          />
         </Box>
       </Box>
     </Box>

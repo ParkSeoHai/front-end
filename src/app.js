@@ -30,13 +30,12 @@ const cookieParser = require('cookie-parser');
 const cors = require('cors');
 // Thêm vào sau các middleware cơ bản
 app.use(cookieParser());
-// app.use(cors());
-// app.use(cors({
-//   origin: 'http://localhost:5173', // Frontend URL
-//   credentials: true, // Cho phép gửi cookies
-//   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-//   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept']
-// }));
+app.use(cors({
+  origin: 'http://https://back-end-gray-pi.vercel.app:5173', // Frontend URL
+  credentials: true, // Cho phép gửi cookies
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept']
+}));
 // Routes
 app.use('/api/users', userRoutes);
 app.use('/api/suppliers', supplierRoutes);

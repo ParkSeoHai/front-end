@@ -72,19 +72,19 @@ const Home = () => {
         <Slider {...settings}>
           <div>
             <img 
-              src="..//image/poster_1.jpg" 
+              src="/public/image/poster_1.jpg" 
               alt="Slide 1"
             />
           </div>
           <div>
             <img 
-              src="..//image/poster_2.jpg" 
+              src="/public/image/poster_2.jpg" 
               alt="Slide 2"
             />
           </div>
           <div>
             <img 
-              src="..//image/poster_3.jpg" 
+              src="/public/image/poster_3.jpg" 
               alt="Slide 3"
             />
           </div>
@@ -198,12 +198,12 @@ const Home = () => {
           >
             {categories.map((item) => (
               <Box
-                key={item}
+                key={item.id} // Sửa thành item.id
                 sx={{
                   whiteSpace: 'nowrap',
-                  color: item === 'GIẢM GIÁ' ? '#cc0f0f' : '#303030',
+                  color: item.TenDanhMuc === 'GIẢM GIÁ' ? '#cc0f0f' : '#303030',
                   fontSize: '13px',
-                  fontWeight: item === 'GIẢM GIÁ' ? 600 : 400,
+                  fontWeight: item.TenDanhMuc === 'GIẢM GIÁ' ? 600 : 400,
                   cursor: 'pointer',
                   '&:hover': {
                     color: '#cc0f0f'

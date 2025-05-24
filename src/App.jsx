@@ -150,6 +150,7 @@ function App() {
           <Route path="export" element={<WarehouseForm />} />
           <Route path=":id" element={<WarehouseDetail />} />
         </Route>
+        // Trong phần routes
         <Route path="/admin/profile" element={<ProfileAdmin />} />
         <Route path="/admin/settings" element={<Settings />} />
       </Route>
