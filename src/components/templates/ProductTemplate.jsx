@@ -1,6 +1,6 @@
 import { Box, Grid2, Pagination, Typography, IconButton, Drawer } from "@mui/material";
 import SearchForm from "../../component/header/SearchForm";
-import ProductItem from "../../component/main_component/productItem";
+import ProductItem from "../../component/main_component/ProductItem";
 import { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
