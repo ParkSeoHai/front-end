@@ -52,7 +52,7 @@ const PaymentMethods = ({ value, onChange }) => {
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                 <Box 
                   component="img" 
-                  src="/public/image/paypal-3384015_1280.webp"
+                  src="/image/paypal-3384015_1280.webp"
                   sx={{ width: 28, height: 28 }}
                 />
                 <Box>

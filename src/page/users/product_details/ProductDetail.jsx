@@ -514,7 +514,7 @@ const ProductDetail = () => {
               <Box sx={{ p: 2, borderTop: "1px solid #ddd" }}>
                 <Box
                   component="img"
-                  src="/public/image/size.jpg"
+                  src="/image/size.jpg"
                   alt="Bảng size chart"
                   sx={{
                     width: "100%",

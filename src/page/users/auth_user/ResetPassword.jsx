@@ -56,8 +56,8 @@ const ResetPassword = () => {
       minHeight: '100vh', 
       bgcolor: '#f5f5f5',
       backgroundImage: {
-        xs: 'linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)), url("/public/image/login_background.jpg")',
-        md: 'url("/public/image/login_background.jpg")'
+        xs: 'linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)), url("/image/login_background.jpg")',
+        md: 'url("/image/login_background.jpg")'
       },
       backgroundSize: 'cover',
       backgroundPosition: 'center'

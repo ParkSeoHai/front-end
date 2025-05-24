@@ -289,7 +289,7 @@ const handleExpandMenu = (index) => {
               }}
             >
               <img
-                src="/public/image/logo_main.jpg"
+                src="/image/logo_main.jpg"
                 width={77}
                 height={44}
               />
@@ -425,7 +425,7 @@ const handleExpandMenu = (index) => {
               }}
             >
               <img
-                src="/public/image/logo_main.jpg"
+                src="/image/logo_main.jpg"
                 width={61}
                 height={38}
               />

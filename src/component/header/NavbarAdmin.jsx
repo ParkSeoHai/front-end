@@ -129,7 +129,7 @@ const NavbarAdmin = () => {
     <Box sx={{ width: 280, bgcolor: "#fff", height: "100vh", color: "#303030", position: "fixed", left: 0, top: 0, borderRight: "1px solid #e0e0e0" }}>
       <Box sx={{ p: 2, borderBottom: "1px solid #e0e0e0", display: "flex", alignItems: "center", '& :hover': { cursor: 'pointer' }, }} onClick={() => navigate("/admin")}>
         <img
-          src="/public/image/logo_main.jpg"
+          src="/image/logo_main.jpg"
           width={80}
           height={40}
           alt=""
