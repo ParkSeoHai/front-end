@@ -27,7 +27,7 @@ import LoginAdmin from "./page/admin/auth_admin/LoginAdmin";
 import CategoryDetail from "./page/admin/categories_management/CategoryDetail";
 import Dashboard from "./page/admin/DashBoard/DashBoard";
 import TShirts from "./page/users/product/casual-wear/t-shirts/T-shirts";
-import Shorts from "./page/users/product/casual-wear/shorts/shorts";
+import Shorts from "./page/users/product/casual-wear/shorts/Shorts";
 import Blazers from "./page/users/product/office-wear/blazers/blazers";
 import OfficeDresses from "./page/users/product/office-wear/dresses/dresses";
 import OfficeShirts from "./page/users/product/office-wear/shirts/shirts";
