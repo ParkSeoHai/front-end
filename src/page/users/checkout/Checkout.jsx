@@ -171,7 +171,7 @@ const [paypalOrderDetails, setPaypalOrderDetails] = useState(null);
   };
 
   return (
-    <Box sx={{ maxWidth: "1240px", margin: "0 auto", p: 3 }}>
+    <Box sx={{ maxWidth: "1240px", margin: "0 auto", p: 3, marginTop:{xs: "80px"} }}>
       <Typography variant="h6" sx={{ mb: 3, fontWeight: 600 }}>
         Thông tin giao hàng
       </Typography>

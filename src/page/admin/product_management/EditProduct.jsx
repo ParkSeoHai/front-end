@@ -51,7 +51,7 @@ const EditProduct = () => {
       MoTa: "",
     },
     GiaSanPham: "",
-    SoLuong: null,
+    SoLuong: 0,
     MoTa: "",
     MauSac: [],
     TrangThai: "available",
@@ -90,7 +90,7 @@ const EditProduct = () => {
         setFormData({
           TenSanPham: productData.TenSanPham || "",
           GiaSanPham: productData.GiaSanPham || "",
-          SoLuong: productData.SoLuong || 0,
+          SoLuong: 0,
           MoTa: productData.MoTa || "",
           MauSac: productData.MauSac || [],
           TrangThai: productData.TrangThai || "available",
@@ -111,7 +111,7 @@ const EditProduct = () => {
 
         if (productData.HinhAnh && productData.HinhAnh.length > 0) {
           const imageUrls = productData.HinhAnh.map(
-            (img) => `https://back-end-gray-pi.vercel.app${img}`
+            (img) => `http://localhost:8080${img}`
           );
           setExistingImages(productData.HinhAnh);
           setPreviewUrls(imageUrls);
@@ -343,19 +343,6 @@ const EditProduct = () => {
                 value={formData.GiaSanPham}
                 onChange={(e) =>
                   setFormData({ ...formData, GiaSanPham: e.target.value })
-                }
-                required
-                fullWidth
-                sx={{ '& .MuiInputLabel-root': { bgcolor: 'white', px: 1 } }}
-              />
-
-              <TextField
-                label="Số lượng"
-                type="number"
-                value={formData.SoLuong}
-                InputLabelProps={{ shrink: true }}
-                onChange={(e) =>
-                  setFormData({ ...formData, SoLuong: e.target.value })
                 }
                 required
                 fullWidth

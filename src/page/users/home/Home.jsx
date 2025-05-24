@@ -1,12 +1,10 @@
-import React, { useEffect } from "react";
+import  { useEffect } from "react";
 import Slider from "react-slick";
 import {
   Box,
-  Button,
   Grid2,
   IconButton,
   Rating,
-  TextField,
   Typography,
 } from "@mui/material";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
@@ -57,25 +55,56 @@ const Home = () => {
      
       
       {/* Start Banner */}
-      <Box className="relative" sx={{ margin: "0 auto" }}>
+      <Box className="relative" sx={{ 
+        margin: "0 auto",
+        display: { xs: 'none', md: 'block' },
+        '& .slick-slider': {
+          '& img': {
+            width: '100%',
+            height: { xs: '200px', sm: '300px', md: 'auto' }, // Responsive height
+            objectFit: 'cover'
+          }
+        },
+        '& .slick-dots': {
+          bottom: { xs: '10px', md: '25px' }
+        }
+      }}>
         <Slider {...settings}>
           <div>
-            <img src="..//image/poster_1.jpg" alt="Slide 1" />
+            <img 
+              src="../../../../public/image/poster_1.jpg" 
+              alt="Slide 1"
+            />
           </div>
           <div>
-            <img src="..//image/poster_2.jpg" alt="Slide 2" />
+            <img 
+              src="../../../../public/image/poster_2.jpg" 
+              alt="Slide 2"
+            />
           </div>
           <div>
-            <img src="..//image/poster_3.jpg" alt="Slide 3" />
+            <img 
+              src="../../../../public/image/poster_3.jpg" 
+              alt="Slide 3"
+            />
           </div>
         </Slider>
-        <SearchForm />
-
+        <Box sx={{ 
+          position: 'absolute',
+          width: '100%',
+          top: { xs: '50%', md: '90%' },
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          zIndex: 1
+        }}>
+          <SearchForm />
+        </Box>
       </Box>
       {/*End Banner */}
       {/* Start container */}
       <Box sx={{ maxWidth: "1240px", margin: "0 auto" }}>
         {/*Start Category */}
+        {/* Desktop Category */}
         <Box
           sx={{
             padding: "60px 0 70px",
@@ -142,6 +171,51 @@ const Home = () => {
             </Box>
           ))}
         </Box>
+
+        {/* Mobile Category */}
+        <Box sx={{ 
+          display: { xs: 'block', md: 'none' },
+          position: 'fixed',
+          top: 56,
+          left: 0,
+          right: 0,
+          backgroundColor: '#fff',
+          zIndex: 1000,
+          borderBottom: '1px solid #eee'
+        }}>
+          <Box
+            sx={{
+              display: 'flex',
+              overflowX: 'auto',
+              px: 2,
+              py: 1.5,
+              gap: 2,
+              '&::-webkit-scrollbar': {
+                display: 'none'
+              },
+              scrollbarWidth: 'none'
+            }}
+          >
+            {categories.map((item) => (
+              <Box
+                key={item}
+                sx={{
+                  whiteSpace: 'nowrap',
+                  color: item === 'GIẢM GIÁ' ? '#cc0f0f' : '#303030',
+                  fontSize: '13px',
+                  fontWeight: item === 'GIẢM GIÁ' ? 600 : 400,
+                  cursor: 'pointer',
+                  '&:hover': {
+                    color: '#cc0f0f'
+                  }
+                }}
+                onClick={() => handleCategoryClick(item)}
+              >
+                {item?.TenDanhMuc}
+              </Box>
+            ))}
+          </Box>
+        </Box>
         {/*End Category */}
         {/* Start product style  */}
         <Grid2
@@ -200,7 +274,7 @@ const Home = () => {
             </Typography>
             <Grid2
               container
-              sx={{ padding: { xs: "0 14px", md: "0 100px" } }}
+              sx={{ padding: { xs: "0 14px", md: "0 100px" },marginTop:{xs:"112px",md:"0"} }}
               spacing={{ xs: 1, md: 3 }}
               justifyContent="center"
             >

@@ -160,6 +160,18 @@ const OrderManagement = () => {
       'Trạng thái': getStatusText(order.TrangThaiDonHang)
     })));
 
+    // Set column widths
+    const columnWidths = [
+      { wch: 15 },  
+      { wch: 40 },  
+      { wch: 25 },  
+      { wch: 15 },  
+      { wch: 15 },  
+      { wch: 15 },  
+    ];
+
+    worksheet['!cols'] = columnWidths;
+
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, 'Orders');
     XLSX.writeFile(workbook, `${fileName}.xlsx`);

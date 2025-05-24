@@ -48,7 +48,7 @@ const AddProduct = () => {
       MoTa: "",
     },
     GiaSanPham: "",
-    SoLuong: null,
+    SoLuong: 0,
     MoTa: "",
     MauSac: [],
     TrangThai: "available",
@@ -334,21 +334,6 @@ const AddProduct = () => {
                   })
                 }
               />
-                <TextField
-                  required
-                  fullWidth
-                  type="number"
-                  label="Số lượng"
-                  value={formData.SoLuong}
-                  onChange={(e) => {
-                    const newValue = Number(e.target.value);
-                    setFormData({
-                      ...formData,
-                      SoLuong: newValue,
-                      TrangThai: newValue > 0 ? "available" : "outOfStock",
-                    });
-                  }}
-                />
                  <FormControl fullWidth>
                   <InputLabel>Trạng thái</InputLabel>
                   <Select

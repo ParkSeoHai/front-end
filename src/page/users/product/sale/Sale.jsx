@@ -16,20 +16,37 @@ const Sales = () => {
     fetchAllData();
   }, []);
 
+  // Filter and process sale products
+  const saleProducts = products?.filter(product => 
+    (product.TonKho?.SoLuong > 0 && product.SoLuong === 0) || 
+    (product.TonKho?.GiamGia)
+  ).map(product => {
+    const originalPrice = product.GiaSanPham;
+    const discountAmount = product.TonKho?.GiamGia || 0;
+    const discountedPrice = originalPrice - discountAmount;
+    const discountPercentage = Math.round((discountAmount / originalPrice) * 100);
+    return {
+      ...product,
+      discountPercentage,
+      discountedPrice
+    };
+  });
+
   useEffect(() => {
-    if (products) {
-      setTotalPages(Math.ceil(products.length / itemsPerPage));
+    if (saleProducts) {
+      setTotalPages(Math.ceil(saleProducts.length / itemsPerPage));
     }
-  }, [products]);
+  }, [saleProducts]);
+
+  // Update displayed products to use saleProducts
+  const displayedProducts = saleProducts?.slice(
+    (page - 1) * itemsPerPage,
+    page * itemsPerPage
+  );
 
   const handlePageChange = (event, value) => {
     setPage(value);
   };
-
-  const displayedProducts = products?.slice(
-    (page - 1) * itemsPerPage,
-    page * itemsPerPage
-  );
 
   // Replace the product grid section
   return (
@@ -106,7 +123,7 @@ const Sales = () => {
                     top: "8px",
                     left: "12px",
                   }}>
-                    -30%
+                    -{product.discountPercentage}%
                   </Box>
                 </Box>
                 <Typography
@@ -142,7 +159,7 @@ const Sales = () => {
                       textAlign: "center",
                     }}
                   >
-                    {(product.GiaSanPham * (1 - 30/100)).toLocaleString('vi-VN')}đ
+                    {product.discountedPrice.toLocaleString('vi-VN')}đ
                   </Typography>
                   <Typography
                     sx={{

@@ -49,7 +49,7 @@ const Cart = () => {
   const consolidatedCartItems = cartItems.reduce((acc, item) => {
     const existingItem = acc.find(i => 
       i.idSanPham === item.idSanPham && 
-      i.KichThuoc.TenKichThuoc === item.KichThuoc.TenKichThuoc
+      i.KichThuoc?.TenKichThuoc === item.KichThuoc?.TenKichThuoc
     );
     if (existingItem) {
       existingItem.quantity += 1;
@@ -62,7 +62,7 @@ const Cart = () => {
   const handleQuantityChange = async (idSanPham, kichThuoc, change) => {
     const item = consolidatedCartItems.find(
       (item) => item.idSanPham === idSanPham && 
-                item.KichThuoc.TenKichThuoc === kichThuoc
+                item.KichThuoc?.TenKichThuoc === kichThuoc
     );
     if (!item) return;
 
@@ -76,7 +76,7 @@ const Cart = () => {
     } else {
       const newQuantity = item.quantity + change;
       try {
-        await handleUpdateCartItem(idSanPham, newQuantity);
+        await handleUpdateCartItem(idSanPham, newQuantity, kichThuoc);
         await handleFetchCart();
       } catch (error) {
         console.error("Error updating quantity:", error);
@@ -86,15 +86,13 @@ const Cart = () => {
 
   const handleDeleteCartItem = async (idSanPham) => {
     try {
-      await handleRemoveAllFromCart(idSanPham);
+      await handleRemoveFromCart(idSanPham);  // Thay vì handleRemoveAllFromCart
       await handleFetchCart();
     } catch (error) {
       console.error("Error deleting cart item:", error);
     }
   };
   const [discountAmount, setDiscountAmount] = useState(0);
-
-
 
   useEffect(() => {
     handleFetchCart();
@@ -111,10 +109,15 @@ const Cart = () => {
   return (
     <>
       <SearchForm />
-      <Box sx={{ maxWidth: "1240px", margin: "30px auto", padding: "20px" }}>
+      <Box sx={{ maxWidth: "1240px", margin: "30px auto", padding: "20px", marginTop:{xs: "80px"} }}>
         <Typography
           variant="h4"
-          sx={{ textAlign: "center", fontWeight: 600, mb: 2 }}
+          sx={{ 
+            textAlign: "center", 
+            fontWeight: 600, 
+            mb: 2,
+            fontSize: { xs: '1.5rem', sm: '2rem', md: '2.125rem' }
+          }}
         >
           GIỎ HÀNG CỦA BẠN
         </Typography>
@@ -122,97 +125,220 @@ const Cart = () => {
           Có {consolidatedCartItems.length} sản phẩm trong giỏ hàng
         </Typography>
 
-        <Box sx={{ display: "flex", gap: 4 }}>
+        <Box sx={{ 
+          display: "flex", 
+          gap: { xs: 2, sm: 3, md: 4 },
+          flexDirection: { xs: "column", md: "row" }
+        }}>
           {/* Cart Items */}
-          <Box sx={{ flex: 2 }}>
-            <TableContainer component={Paper} sx={{ mb: 2, boxShadow: "none" }}>
-              <Table>
-                <TableHead>
-                  <TableRow sx={{ bgcolor: "#f5f5f5" }}>
-                    <TableCell sx={{ width: "150px" }}>Hình ảnh</TableCell>
-                    <TableCell>Thông tin</TableCell>
-                    <TableCell align="center">Số lượng</TableCell>
-                    <TableCell align="right">Giá tiền</TableCell>
-                    <TableCell align="right" sx={{ width: "50px" }}></TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {consolidatedCartItems.map((cartItem) => (
-                    <TableRow key={`${cartItem.idSanPham}-${cartItem.KichThuoc.TenKichThuoc}`}>
-                      <TableCell>
-                        <img
-                          src={`https://back-end-gray-pi.vercel.app${cartItem?.HinhAnh}`}
-                          alt={cartItem?.TenSanPham}
-                          width={80}
-                          height={80}
-                          style={{ objectFit: "cover" }}
-                        />
-                      </TableCell>
-                      <TableCell>
-                        <Typography variant="body1" sx={{ fontWeight: 500 }}>
-                          {cartItem?.TenSanPham}
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                          Kích thước: {cartItem.KichThuoc.TenKichThuoc}
-                        </Typography>
-                      </TableCell>
-                      <TableCell align="center">
-                        <Box
-                          sx={{
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                          }}
-                        >
-                          <IconButton
-                            size="small"
-                            onClick={() =>
-                              handleQuantityChange(
-                                cartItem.idSanPham,
-                                cartItem.KichThuoc.TenKichThuoc,
-                                -1
-                              )
-                            }
-                          >
-                            <RemoveIcon />
-                          </IconButton>
-                          <Typography sx={{ mx: 2 }}>
-                            {cartItem.quantity}
-                          </Typography>
-                          <IconButton
-                            size="small"
-                            onClick={() =>
-                              handleQuantityChange(
-                                cartItem.idSanPham,
-                                cartItem.KichThuoc.TenKichThuoc,
-                                1
-                              )
-                            }
-                          >
-                            <AddIcon />
-                          </IconButton>
-                        </Box>
-                      </TableCell>
-                      <TableCell align="right">
-                        {(cartItem?.GiaTien * cartItem.quantity).toLocaleString(
-                          "vi-VN"
-                        )}
-                        đ
-                      </TableCell>
-                      <TableCell align="right">
-                        <IconButton
-                          onClick={() =>
-                            handleDeleteCartItem(cartItem.idSanPham)
-                          }
-                        >
-                          <ClearIcon />
-                        </IconButton>
-                      </TableCell>
+          <Box sx={{ 
+            flex: { xs: '1', md: 2 },
+            overflow: 'auto'
+          }}>
+            {/* Desktop View */}
+            <Box sx={{ display: { xs: 'none', md: 'block' } }}>
+              <TableContainer component={Paper} sx={{ mb: 2, boxShadow: "none" }}>
+                <Table>
+                  <TableHead>
+                    <TableRow sx={{ bgcolor: "#f5f5f5" }}>
+                      <TableCell sx={{ 
+                        width: { xs: "80px", sm: "100px", md: "150px" },
+                        padding: { xs: 1, sm: 2 }
+                      }}>Hình ảnh</TableCell>
+                      <TableCell>Thông tin</TableCell>
+                      <TableCell align="center">Số lượng</TableCell>
+                      <TableCell align="right">Giá tiền</TableCell>
+                      <TableCell align="right" sx={{ width: "50px" }}></TableCell>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
+                  </TableHead>
+                  <TableBody>
+                    {consolidatedCartItems.map((cartItem) => (
+                      <TableRow key={`${cartItem.idSanPham}-${cartItem.KichThuoc?.TenKichThuoc}`}>
+                        <TableCell sx={{ padding: { xs: 1, sm: 2 } }}>
+                          <img
+                            src={`http://localhost:8080${cartItem?.HinhAnh}`}
+                            alt={cartItem?.TenSanPham}
+                            width={80}
+                            height={80}
+                            style={{ 
+                              objectFit: "cover",
+                              width: '100%',
+                              maxWidth: '80px'
+                            }}
+                          />
+                        </TableCell>
+                        <TableCell>
+                          <Typography 
+                            variant="body1" 
+                            sx={{ 
+                              fontWeight: 500,
+                              fontSize: { xs: '0.875rem', sm: '1rem' }
+                            }}
+                          >
+                            {cartItem?.TenSanPham}
+                          </Typography>
+                          <Typography variant="body2" color="text.secondary">
+                            Kích thước: {cartItem.KichThuoc?.TenKichThuoc}
+                          </Typography>
+                        </TableCell>
+                        <TableCell align="center">
+                          <Box
+                            sx={{
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                            }}
+                          >
+                            <IconButton
+                              size="small"
+                              onClick={() =>
+                                handleQuantityChange(
+                                  cartItem.idSanPham,
+                                  cartItem.KichThuoc?.TenKichThuoc,
+                                  -1
+                                )
+                              }
+                            >
+                              <RemoveIcon />
+                            </IconButton>
+                            <Typography sx={{ mx: 2 }}>
+                              {cartItem.quantity}
+                            </Typography>
+                            <IconButton
+                              size="small"
+                              onClick={() =>
+                                handleQuantityChange(
+                                  cartItem.idSanPham,
+                                  cartItem.KichThuoc?.TenKichThuoc,
+                                  1
+                                )
+                              }
+                            >
+                              <AddIcon />
+                            </IconButton>
+                          </Box>
+                        </TableCell>
+                        <TableCell align="right">
+                          {(cartItem?.GiaTien * cartItem.quantity).toLocaleString(
+                            "vi-VN"
+                          )}
+                          đ
+                        </TableCell>
+                        <TableCell align="right">
+                          <IconButton
+                            onClick={() =>
+                              handleDeleteCartItem(cartItem.idSanPham)
+                            }
+                          >
+                            <ClearIcon />
+                          </IconButton>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </Box>
+
+            {/* Mobile View */}
+            <Box sx={{ display: { xs: 'block', md: 'none' } }}>
+              {consolidatedCartItems.map((cartItem) => (
+                <Box
+                  key={`${cartItem.idSanPham}-${cartItem.KichThuoc?.TenKichThuoc}`}
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: 2,
+                    p: 2,
+                    mb: 2,
+                    bgcolor: 'white',
+                    borderRadius: 1,
+                    boxShadow: '0 1px 3px rgba(0,0,0,0.12)'
+                  }}
+                >
+                  <Box sx={{ display: 'flex', gap: 2 }}>
+                    <img
+                      src={`http://localhost:8080${cartItem?.HinhAnh}`}
+                      alt={cartItem?.TenSanPham}
+                      style={{ 
+                        width: '100px',
+                        height: '100px',
+                        objectFit: "cover",
+                        borderRadius: '4px'
+                      }}
+                    />
+                    <Box sx={{ flex: 1 }}>
+                      <Typography 
+                        variant="body1" 
+                        sx={{ 
+                          fontWeight: 500,
+                          fontSize: '1rem',
+                          mb: 0.5
+                        }}
+                      >
+                        {cartItem?.TenSanPham}
+                      </Typography>
+                      <Typography 
+                        variant="body2" 
+                        color="text.secondary"
+                        sx={{ mb: 1 }}
+                      >
+                        Kích thước: {cartItem.KichThuoc?.TenKichThuoc}
+                      </Typography>
+                      <Typography 
+                        sx={{ 
+                          color: '#dc0606',
+                          fontWeight: 600,
+                          fontSize: '1rem'
+                        }}
+                      >
+                        {(cartItem?.GiaTien * cartItem.quantity).toLocaleString("vi-VN")}đ
+                      </Typography>
+                    </Box>
+                    <IconButton
+                      size="small"
+                      onClick={() => handleDeleteCartItem(cartItem.idSanPham)}
+                      sx={{ alignSelf: 'flex-start' }}
+                    >
+                      <ClearIcon />
+                    </IconButton>
+                  </Box>
+                  
+                  <Box sx={{ 
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: 2,
+                    borderTop: '1px solid #eee',
+                    pt: 2
+                  }}>
+                    <IconButton
+                      size="small"
+                      onClick={() => handleQuantityChange(
+                        cartItem.idSanPham,
+                        cartItem.KichThuoc?.TenKichThuoc,
+                        -1
+                      )}
+                    >
+                      <RemoveIcon />
+                    </IconButton>
+                    <Typography sx={{ mx: 2, minWidth: '20px', textAlign: 'center' }}>
+                      {cartItem.quantity}
+                    </Typography>
+                    <IconButton
+                      size="small"
+                      onClick={() => handleQuantityChange(
+                        cartItem.idSanPham,
+                        cartItem.KichThuoc?.TenKichThuoc,
+                        1
+                      )}
+                    >
+                      <AddIcon />
+                    </IconButton>
+                  </Box>
+                </Box>
+              ))}
+            </Box>
 
             {cartItems.length === 0 && (
               <Typography sx={{ textAlign: "center", py: 4 }}>
@@ -222,7 +348,15 @@ const Cart = () => {
           </Box>
 
           {/* Order Summary */}
-          <Box sx={{ flex: 1, bgcolor: "#f8f9fa", p: 3, borderRadius: 1 }}>
+          <Box sx={{ 
+            flex: { xs: '1', md: 1 }, 
+            bgcolor: "#f8f9fa", 
+            p: { xs: 2, sm: 3 }, 
+            borderRadius: 1,
+            position: { xs: 'static', md: 'sticky' },
+            top: '20px',
+            height: 'fit-content'
+          }}>
             <Typography variant="h6" sx={{ mb: 3, fontWeight: 600 }}>
               Tóm tắt đơn hàng
             </Typography>
@@ -264,11 +398,12 @@ const Cart = () => {
             <Button
               variant="contained"
               fullWidth
-              onClick={() => navigate("/user/checkout")} // Navigate to checkout page
+              onClick={() => navigate("/user/checkout")}
               sx={{
                 bgcolor: "#dc0606",
                 mb: 2,
                 "&:hover": { bgcolor: "#b00404" },
+                fontSize: { xs: '0.875rem', sm: '1rem' }
               }}
             >
               TIẾN HÀNH ĐẶT HÀNG
@@ -284,6 +419,7 @@ const Cart = () => {
                   borderColor: "#303030",
                   bgcolor: "rgba(48, 48, 48, 0.04)",
                 },
+                fontSize: { xs: '0.875rem', sm: '1rem' }
               }}
             >
               MUA THÊM SẢN PHẨM

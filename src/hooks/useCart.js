@@ -30,12 +30,13 @@ export const useCart = () => {
     }
   };
 
-  const handleUpdateCartItem = async (itemId, quantity) => {
+  const handleUpdateCartItem = async (itemId, quantity, KichThuoc) => {
     try {
       const user = JSON.parse(localStorage.getItem("user"));
       await dispatch(updateCartItem({ 
         itemId, 
         quantity,
+        KichThuoc,
         userId: user?.id 
       })).unwrap();
       return true;

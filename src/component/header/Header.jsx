@@ -116,6 +116,10 @@ const settings = [
     path: "/user/account",
   },
   {
+    label: "Đơn hàng của tôi",
+    path: "/user/order",
+  },
+  {
     label: "Đăng xuất",
     path: "/auth/user/login",
   }
@@ -236,7 +240,7 @@ const Header = () => {
   const consolidatedCartItems = cartItems.reduce((acc, item) => {
     const existingItem = acc.find(i =>
       i.idSanPham === item.idSanPham &&
-      i.KichThuoc.TenKichThuoc === item.KichThuoc.TenKichThuoc
+      i.KichThuoc?.TenKichThuoc === item.KichThuoc?.TenKichThuoc
     );
     if (existingItem) {
       existingItem.quantity = (existingItem.quantity || 1) + 1;
@@ -245,6 +249,17 @@ const Header = () => {
     }
     return acc;
   }, []);
+// Add this state near other state declarations
+const [expandedMenus, setExpandedMenus] = useState([]);
+              
+// Add this handler function with other handlers
+const handleExpandMenu = (index) => {
+  setExpandedMenus(prev => 
+    prev.includes(index) 
+      ? prev.filter(i => i !== index)
+      : [...prev, index]
+  );
+};
 
   useEffect(() => {
     handleFetchCart();
@@ -274,7 +289,7 @@ const Header = () => {
               }}
             >
               <img
-                src="/image/logo_main.jpg"
+                src="../../../public/image/logo_main.jpg"
                 width={77}
                 height={44}
               />
@@ -295,47 +310,98 @@ const Header = () => {
               >
                 <MenuIcon />
               </IconButton>
-              <Drawer
-                anchor="left"
-                open={Boolean(anchorElNav)}
-                onClose={handleCloseNavMenu}
-              >
-                <Box
-                  sx={{
-                    width: "350px",
-                    display: "flex",
-                    flexDirection: "column",
-                    mt: 2,
-                  }}
+                <Drawer
+                  anchor="left"
+                  open={Boolean(anchorElNav)}
+                  onClose={handleCloseNavMenu}
                 >
-                  <IconButton
-                    onClick={handleCloseNavMenu}
-                    sx={{ alignSelf: "flex-end", mb: 1 }}
+                  <Box
+                    sx={{
+                      width: "350px",
+                      display: "flex",
+                      flexDirection: "column",
+                      mt: 2,
+                    }}
                   >
-                    <CloseIcon />
-                  </IconButton>
-                  {menuItems
-                    .filter((item) => !item.hidden)
-                    .map((page, index) => (
-                      <MenuItem
-                        key={index}
-                        onClick={() => handleMenuClick(page.path)}
-                      >
-                        <Typography
-                          sx={{
-                            color: "#000",
-                            whiteSpace: "nowrap",
-                            fontSize: "14px !important",
-                            fontWeight: 700,
-                            marginLeft: "16px",
-                          }}
-                        >
-                          {page.label}
-                        </Typography>
-                      </MenuItem>
-                    ))}
-                </Box>
-              </Drawer>
+                    <IconButton
+                      onClick={handleCloseNavMenu}
+                      sx={{ alignSelf: "flex-end", mb: 1, mr: 1 }}
+                    >
+                      <CloseIcon />
+                    </IconButton>
+                    {menuItems
+                      .filter((item) => !item.hidden)
+                      .map((page, index) => (
+                        <Box key={index}>
+                          <MenuItem
+                            onClick={() => {
+                              if (page.path === '/user/sale') {
+                                handleMenuClick(page.path);
+                              } else if (page.subItems) {
+                                handleExpandMenu(index);
+                              }
+                            }}
+                            sx={{
+                              borderBottom: page.subItems ? '1px solid #eee' : 'none',
+                              py: 1.5,
+                              display: 'flex',
+                              justifyContent: 'space-between'
+                            }}
+                          >
+                            <Typography
+                              sx={{
+                                color: page.label === 'GIẢM GIÁ' ? '#cc0f0f' : '#000',
+                                whiteSpace: "nowrap",
+                                fontSize: "14px",
+                                fontWeight: 600,
+                                marginLeft: "16px",
+                              }}
+                            >
+                              {page.label}
+                            </Typography>
+                            {page.subItems && (
+                              expandedMenus.includes(index) ? (
+                                <ExpandLessIcon sx={{ ml: 'auto', fontSize: 20 }} />
+                              ) : (
+                                <ExpandMoreIcon sx={{ ml: 'auto', fontSize: 20 }} />
+                              )
+                            )}
+                          </MenuItem>
+                          {page.subItems && (
+                            <Box 
+                              sx={{ 
+                                bgcolor: '#f5f5f5',
+                                maxHeight: expandedMenus.includes(index) ? '500px' : '0',
+                                overflow: 'hidden',
+                                transition: 'max-height 0.3s ease-in-out'
+                              }}
+                            >
+                              {page.subItems.map((item, idx) => (
+                                <MenuItem
+                                  key={idx}
+                                  onClick={() => handleMenuClick(item.path)}
+                                  sx={{
+                                    py: 1,
+                                    pl: 5,
+                                    display: expandedMenus.includes(index) ? 'flex' : 'none'
+                                  }}
+                                >
+                                  <Typography
+                                    sx={{
+                                      fontSize: "13px",
+                                      color: '#666',
+                                    }}
+                                  >
+                                    {item.label}
+                                  </Typography>
+                                </MenuItem>
+                              ))}
+                            </Box>
+                          )}
+                        </Box>
+                      ))}
+                  </Box>
+                </Drawer>
             </Box>
             {/* UI PC */}
             <Typography
@@ -359,7 +425,7 @@ const Header = () => {
               }}
             >
               <img
-                src="/image/20240805_KnfT1Dl0.png"
+                src="../../../public/image/logo_main.jpg"
                 width={61}
                 height={38}
               />
@@ -510,16 +576,16 @@ const Header = () => {
               {/* Personal */}
               <IconButton
                 onClick={handleOpenUserMenu}
-                sx={{ display: { xs: "none", md: "inline-flex" }, color: "#000", p: 0 }}
+                sx={{ display: { xs: "inline-flex", md: "inline-flex" }, color: "#000", p: 0 }}
               >
                 {user ? <Avatar sx={{ width: 34, height: 34 }} alt="avatar" src="/static/images/avatar/1.jpg" /> : (<PersonOutlineOutlinedIcon onClick={() => navigate('/auth/user/login')} />)}
               </IconButton>
               {/* Search */}
-              <IconButton
+              {/* <IconButton
                 sx={{ display: { xs: "inline-flex", md: "none" }, color: "#000", p: 0 }}
               >
                 <SearchIcon />
-              </IconButton>
+              </IconButton> */}
               {user ? (<Menu
                 sx={{ mt: "45px" }}
                 id="menu-appbar"
@@ -599,7 +665,7 @@ const Header = () => {
                       >
                         <Box sx={{ width: 80, height: 80, flexShrink: 0 }}>
                           <img
-                            src={`https://back-end-gray-pi.vercel.app${item.HinhAnh}`}
+                            src={`http://localhost:8080${item.HinhAnh}`}
                             alt={item.TenSanPham}
                             style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                           />
@@ -609,7 +675,7 @@ const Header = () => {
                             {item.TenSanPham}
                           </Typography>
                           <Typography sx={{ fontSize: '0.8rem', color: 'text.secondary', mb: 0.5 }}>
-                            Kích thước: {item.KichThuoc.TenKichThuoc}
+                            Kích thước: {item?.KichThuoc?.TenKichThuoc}
                           </Typography>
                           <Typography sx={{ color: 'text.secondary', fontSize: '0.8rem', mt: 0.5 }}>
                             Số lượng: {item.quantity}
@@ -690,6 +756,7 @@ const Header = () => {
         )}
       </Popper>
     </>
+
   );
 };
 

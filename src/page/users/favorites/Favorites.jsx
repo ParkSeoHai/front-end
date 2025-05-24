@@ -32,7 +32,7 @@ const Favorites = () => {
   };
 
   return (
-    <Box sx={{ maxWidth: "1240px", margin: "0 auto", padding: "40px 20px" }}>
+    <Box sx={{ maxWidth: "1240px", margin: "0 auto", padding: "40px 20px", marginTop:{xs: "80px"} }}>
       <Typography variant="h4" sx={{ mb: 4, fontWeight: 600 }}>
         Sản phẩm yêu thích
       </Typography>

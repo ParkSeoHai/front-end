@@ -1,6 +1,7 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import ProtectedAdminLayout from "./layouts/ProtectedAdminLayout";
 import UserLayout from "./page/users/UserLayout";
+import AdminLayout from "./page/admin/AdminLayout";
 import AddPromotion from "./page/admin/promotion_management/AddPromotion";
 import EditPromotion from "./page/admin/promotion_management/EditPromotion";
 import AddSupplier from "./page/admin/supplier_management/AddSupplier";
@@ -25,8 +26,8 @@ import EditUser from "./page/admin/user_management/EditUser";
 import LoginAdmin from "./page/admin/auth_admin/LoginAdmin";
 import CategoryDetail from "./page/admin/categories_management/CategoryDetail";
 import Dashboard from "./page/admin/DashBoard/DashBoard";
-import TShirts from "./page/users/product/casual-wear/t-shirts/T-shirts";
-import Shorts from "./page/users/product/casual-wear/shorts/Shorts";
+import TShirts from "./page/users/product/casual-wear/t-shirts/t-shirts";
+import Shorts from "./page/users/product/casual-wear/shorts/shorts";
 import Blazers from "./page/users/product/office-wear/blazers/blazers";
 import OfficeDresses from "./page/users/product/office-wear/dresses/dresses";
 import OfficeShirts from "./page/users/product/office-wear/shirts/shirts";
@@ -52,15 +53,19 @@ import Checkout from "./page/users/checkout/Checkout";
 import Favorites from "./page/users/favorites/Favorites";
 import ProfileAdmin from './page/admin/auth_admin/Profile';
 import Settings from './page/admin/auth_admin/Settings';
+import ForgotPassword from './page/users/auth_user/ForgotPassword';
+import ResetPassword from './page/users/auth_user/ResetPassword';
 
 function App() {
   return (
     <Routes>
       {/* Auth Routes */}
+      <Route path="/reset-password/:token" element={<ResetPassword />} />
       <Route path="/auth">
         <Route path="user">
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
+          <Route path="forgot-password" element={<ForgotPassword />} />
         </Route>
         <Route path="admin">
           <Route path="login" element={<LoginAdmin />} />

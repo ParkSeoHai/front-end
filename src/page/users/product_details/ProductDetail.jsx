@@ -11,7 +11,7 @@ import { useProduct } from "../../../hooks/useProduct";
 import { useCart } from "../../../hooks/useCart";
 import { useAuth } from "../../../hooks/useAuth";
 import ProductTemplate from "../../../components/templates/ProductTemplate";
-import ProductItem from "../../../component/main_component/ProductItem";
+import ProductItem from "../../../component/main_component/productItem";
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -36,7 +36,7 @@ const ProductDetail = () => {
       5: 0
     }
   });
-    const isOutOfStock = selectedProduct?.SoLuong === 0;
+    const isOutOfStock = selectedProduct?.SoLuong === 0 && selectedProduct?.TonKho?.SoLuong === 0;
   console.log("products", products);
   const [mainImage, setMainImage] = useState("");
   useEffect(() => {
@@ -45,7 +45,10 @@ const ProductDetail = () => {
     getUser()
     handleFetchProducts()
   }, [id]);
-
+  const originalPrice = selectedProduct?.GiaSanPham || 0;
+  const discountAmount = selectedProduct?.TonKho?.GiamGia || 0;
+  const discountedPrice = originalPrice - discountAmount;
+  const discountPercentage = Math.round((discountAmount / originalPrice) * 100);
   useEffect(() => {
     if (selectedProduct?.HinhAnh && selectedProduct.HinhAnh.length > 0) {
       setMainImage(selectedProduct.HinhAnh[0]);
@@ -94,12 +97,16 @@ const ProductDetail = () => {
       toast.warning("Vui lòng chọn màu sắc");
       return;
     }
+    console.log("originalPrice", originalPrice);
+    console.log("discountAmount", discountAmount);
+    console.log("discountedPrice", discountedPrice);
     const cartItem = {
       user,
       idSanPham: selectedProduct.idSanPham,
       SoLuong: quantity,
       MauSac: selectedColor,
       KichThuoc: selectedSize,
+      GiaTien: discountAmount > 0 ? discountedPrice : originalPrice, // Use discounted price if available
     };
     try {
       const success = await handleAddToCart(cartItem);
@@ -135,33 +142,42 @@ const ProductDetail = () => {
   { isFavorited ? <FavoriteIcon /> : <FavoriteBorderIcon /> }
 
   return (
-    <Box sx={{ maxWidth: "1240px", margin: "0 auto", padding: "20px" }}>
-      <Typography sx={{ mb: 2, color: "#666" }}>
-        Trang chủ / Quần / Quần Ngắn 3S
-      </Typography>
-
-      <Grid container spacing={4}>
+    <Box sx={{ 
+      maxWidth: "1240px", 
+      margin: "0 auto", 
+      padding: { xs: "10px", sm: "15px", md: "20px" } 
+    }}>
+      <Grid container spacing={{ xs: 2, md: 4 }}>
+        {/* Image Section */}
         <Grid item xs={12} md={6}>
-          <Box sx={{ display: "flex", gap: 2 }}>
+          <Box sx={{ 
+            display: "flex", 
+            gap: { xs: 1, sm: 2 },
+            flexDirection: { xs: "column-reverse", sm: "row" }
+          }}>
             {/* Thumbnails */}
-            <Box sx={{ width: 80 }}>
+            <Box sx={{ 
+              width: { xs: "100%", sm: 80 },
+              display: { xs: "flex", sm: "block" },
+              gap: 1,
+              overflowX: { xs: "auto", sm: "visible" },
+              pb: { xs: 1, sm: 0 }
+            }}>
               {selectedProduct?.HinhAnh?.map((image, index) => (
                 <Box
                   key={index}
                   sx={{
-                    width: "100%",
-                    height: 80,
-                    border:
-                      mainImage === image
-                        ? "2px solid #333"
-                        : "1px solid #e1e1e1",
-                    mb: 1,
+                    width: { xs: 60, sm: "100%" },
+                    minWidth: { xs: 60, sm: "auto" },
+                    height: { xs: 60, sm: 80 },
+                    border: mainImage === image ? "2px solid #333" : "1px solid #e1e1e1",
+                    mb: { xs: 0, sm: 1 },
                     cursor: "pointer",
                   }}
                   onClick={() => setMainImage(image)}
                 >
                   <img
-                    src={`https://back-end-gray-pi.vercel.app${image}`}
+                    src={`http://localhost:8080${image}`}
                     alt={`Product thumbnail ${index + 1}`}
                     style={{
                       width: "100%",
@@ -173,10 +189,14 @@ const ProductDetail = () => {
               ))}
             </Box>
             {/* Main Image */}
-            <Box sx={{ flex: 1, height: 600 }}>
+            <Box sx={{ 
+              flex: 1, 
+              height: { xs: 300, sm: 400, md: 600 },
+              mb: { xs: 2, sm: 0 }
+            }}>
               {mainImage && (
                 <img
-                  src={`https://back-end-gray-pi.vercel.app${mainImage}`}
+                  src={`http://localhost:8080${mainImage}`}
                   alt="Main product image"
                   style={{
                     width: "100%",
@@ -189,30 +209,66 @@ const ProductDetail = () => {
           </Box>
         </Grid>
 
-        {/* Right side - Product info */}
+        {/* Product Info Section */}
         <Grid item xs={12} md={6}>
           <Typography
             variant="h1"
-            sx={{ fontSize: 24, fontWeight: 500, mb: 2 }}
+            sx={{ 
+              fontSize: { xs: 20, sm: 22, md: 24 }, 
+              fontWeight: 500, 
+              mb: 2 
+            }}
           >
             {selectedProduct?.TenSanPham}
           </Typography>
-          <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 2 }}>
-            <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
-              {[1, 2, 3, 4, 5].map((star) => (
-                <StarIcon key={star} sx={{ color: "#666", fontSize: 16 }} />
-              ))}
-            </Box>
-          </Box>
-          <Typography
-            sx={{ color: "#dc0606", fontSize: 24, fontWeight: 500, mb: 3 }}
-          >
-            {selectedProduct?.GiaSanPham?.toLocaleString("vi-VN", {
-              style: "currency",
-              currency: "VND",
-            })}
-          </Typography>
 
+          {/* Price Section */}
+          <Box sx={{ 
+            display: 'flex', 
+            alignItems: 'center', 
+            gap: { xs: 1, sm: 2 }, 
+            mb: 3,
+            flexWrap: 'wrap'
+          }}>
+            <Typography sx={{ 
+              color: "#dc0606", 
+              fontSize: { xs: 20, sm: 22, md: 24 }, 
+              fontWeight: 500
+            }}>
+              {discountedPrice.toLocaleString("vi-VN", {
+                style: "currency",
+                currency: "VND",
+              })}
+            </Typography>
+        {discountAmount > 0 && (
+          <>
+            <Typography
+              sx={{
+                color: "#666",
+                fontSize: 16,
+                textDecoration: "line-through"
+              }}
+            >
+              {originalPrice.toLocaleString("vi-VN", {
+                style: "currency",
+                currency: "VND",
+              })}
+            </Typography>
+            <Typography
+              sx={{
+                fontSize: "12px",
+                color: "#fff",
+                background: "#D40404",
+                padding: "4px 8px",
+                borderRadius: "4px",
+              }}
+            >
+              -{discountPercentage}%
+            </Typography>
+          </>
+        )}
+      </Box>
+      <Typography sx={{marginBottom: "16px", color: "#333"}}>Số lượng: {selectedProduct?.SoLuong > 0 ? selectedProduct?.SoLuong : selectedProduct?.TonKho?.SoLuong}</Typography>
           <Box sx={{ mb: 3 }}>
             <Typography sx={{ mb: 1 }}>Màu sắc:</Typography>
             <Box sx={{ display: "flex", gap: 1 }}>
@@ -307,65 +363,74 @@ const ProductDetail = () => {
           </Box> */}
         
 
-          <Box sx={{ display: "flex", gap: 2 }}>
-            <Button
-              variant="outlined"
-              onClick={handleToggleFavoriteClick}
-              sx={{
-                minWidth: "50px",
-                height: "48px",
-                border: "1px solid #ddd",
-                color: isFavorited ? "#dc0606" : "#333",
-                padding: 0,
-                "&:hover": {
-                  border: "1px solid #333",
-                },
-              }}
-            >
-              {isFavorited ? <FavoriteIcon /> : <FavoriteBorderIcon />}
-            </Button>
-            <Button
-              variant="outlined"
-              onClick={handleAddProductToCart}
-              disabled={isOutOfStock}
-              sx={{
-                flex: 1,
-                height: 48,
-                border: "1px solid #333",
-                color: "#333",
-                "&:hover": {
-                  border: "1px solid #333",
-                  bgcolor: "transparent",
-                },
-                "&.Mui-disabled": {
-                  bgcolor: "#f5f5f5",
-                  color: "#999",
-                  border: "1px solid #ddd"
-                }
-              }}
-            >
-              {isOutOfStock ? "HẾT HÀNG" : "THÊM VÀO GIỎ HÀNG"}
-            </Button>
-            <Button
-              variant="contained"
-              disabled={isOutOfStock}
-              sx={{
-                flex: 1,
-                height: 48,
-                bgcolor: "#333",
-                "&:hover": {
-                  bgcolor: "#000",
-                },
-                "&.Mui-disabled": {
-                  bgcolor: "#f5f5f5",
-                  color: "#999"
-                }
-              }}
-              onClick={handleMuaNgay}
-            >
-              {isOutOfStock ? "HẾT HÀNG" : "MUA NGAY"}
-            </Button>
-          </Box>
+          {/* Action Buttons */}
+                <Box sx={{ 
+                  display: "flex", 
+                  gap: { xs: 1, sm: 2 },
+                  flexDirection: { xs: "column", sm: "row" },
+                  mt: { xs: 2, sm: 0 }
+                }}>
+                  <Button
+                    variant="outlined"
+                    onClick={handleToggleFavoriteClick}
+                    sx={{
+                      minWidth: { xs: "100%", sm: "50px" },
+                      height: "48px",
+                      border: "1px solid #ddd",
+                      color: isFavorited ? "#dc0606" : "#333",
+                      padding: 0,
+                      order: { xs: 3, sm: 1 },
+                      "&:hover": {
+                        border: "1px solid #333",
+                      },
+                    }}
+                  >
+                    {isFavorited ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    onClick={handleAddProductToCart}
+                    disabled={isOutOfStock}
+                    sx={{
+                      flex: { xs: "auto", sm: 1 },
+                      height: 48,
+                      border: "1px solid #333",
+                      color: "#333",
+                      order: { xs: 2, sm: 2 },
+                      "&:hover": {
+                        border: "1px solid #333",
+                        bgcolor: "transparent",
+                      },
+                      "&.Mui-disabled": {
+                        bgcolor: "#f5f5f5",
+                        color: "#999",
+                        border: "1px solid #ddd"
+                      }
+                    }}
+                  >
+                    {isOutOfStock ? "HẾT HÀNG" : "THÊM VÀO GIỎ HÀNG"}
+                  </Button>
+                  <Button
+                    variant="contained"
+                    disabled={isOutOfStock}
+                    sx={{
+                      flex: { xs: "auto", sm: 1 },
+                      height: 48,
+                      bgcolor: "#333",
+                      order: { xs: 1, sm: 3 },
+                      "&:hover": {
+                        bgcolor: "#000",
+                      },
+                      "&.Mui-disabled": {
+                        bgcolor: "#f5f5f5",
+                        color: "#999"
+                      }
+                    }}
+                    onClick={handleMuaNgay}
+                  >
+                    {isOutOfStock ? "HẾT HÀNG" : "MUA NGAY"}
+                  </Button>
+                </Box>
           <Box>
             <Box
               onClick={() => setShowDetails(!showDetails)}
@@ -452,7 +517,7 @@ const ProductDetail = () => {
               <Box sx={{ p: 2, borderTop: "1px solid #ddd" }}>
                 <Box
                   component="img"
-                  src="..//image/size.jpg"
+                  src="../../../../public/image/size.jpg"
                   alt="Bảng size chart"
                   sx={{
                     width: "100%",
@@ -553,7 +618,7 @@ const ProductDetail = () => {
                       WebkitLineClamp: 2,
                       WebkitBoxOrient: 'vertical'
                     }}
-                    onClick={() => navigate(`/product/${product.idSanPham}`)}
+                    onClick={() => navigate(`/user/product/${product.idSanPham}`)}
                   >
                     {product.TenSanPham}
                   </Typography>

@@ -43,12 +43,12 @@ export const useProduct = () => {
   const fetchAllData = async () => {
     try {
       const [typesRes, pricesRes, stylesRes, suppliersRes,categoriesRes,sizesRes] = await Promise.all([
-        axios.get('https://back-end-gray-pi.vercel.app/api/product-types', getAuthHeader()),
-        axios.get('https://back-end-gray-pi.vercel.app/api/prices', getAuthHeader()),
-        axios.get('https://back-end-gray-pi.vercel.app/api/styles', getAuthHeader()),
-        axios.get('https://back-end-gray-pi.vercel.app/api/suppliers', getAuthHeader()),
-        axios.get('https://back-end-gray-pi.vercel.app/api/categories', getAuthHeader()),
-        axios.get('https://back-end-gray-pi.vercel.app/api/sizes', getAuthHeader())
+        axios.get('http://localhost:8080/api/product-types', getAuthHeader()),
+        axios.get('http://localhost:8080/api/prices', getAuthHeader()),
+        axios.get('http://localhost:8080/api/styles', getAuthHeader()),
+        axios.get('http://localhost:8080/api/suppliers', getAuthHeader()),
+        axios.get('http://localhost:8080/api/categories', getAuthHeader()),
+        axios.get('http://localhost:8080/api/sizes', getAuthHeader())
       ]);
       console.log("sizesRes",sizesRes)
       setProductTypes(typesRes.data['product-types']);

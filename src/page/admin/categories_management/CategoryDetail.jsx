@@ -47,7 +47,7 @@ const CategoryDetail = () => {
   // Constants
   const formFields = category ? categoryFormConfigs[category.TenMuc] : [];
   const visibleFields = formFields.filter(field => !field.hidden);
-  const BASE_URL = 'https://back-end-gray-pi.vercel.app';
+  const BASE_URL = 'http://localhost:8080';
   const API_ENDPOINT = category ? `${BASE_URL}/api/${category.endpoint}` : '';
 
   // Handlers

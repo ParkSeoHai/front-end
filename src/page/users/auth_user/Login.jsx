@@ -1,8 +1,6 @@
 import { Box, TextField, Button, Typography, Grid, Backdrop } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import GoogleIcon from '@mui/icons-material/Google';
-import FacebookIcon from '@mui/icons-material/Facebook';
 import { useAuth } from '../../../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 import { CircularProgress, Alert } from '@mui/material';
@@ -42,75 +40,6 @@ const Login = () => {
     }
   }, [isAuthenticated, location.state, navigate]);
 
-  const handleGoogleLogin = async () => {
-    try {
-      // Khởi tạo Google OAuth Client
-      const googleAuth = await window.gapi.auth2.getAuthInstance();
-      const googleUser = await googleAuth.signIn();
-      
-      const profile = googleUser.getBasicProfile();
-      const userData = {
-        email: profile.getEmail(),
-        name: profile.getName(),
-        googleId: profile.getId()
-      };
-  
-      // Gọi API đăng nhập Google
-      const response = await fetch('/api/auth/google', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(userData)
-      });
-  
-      if (response.ok) {
-        const data = await response.json();
-        // Xử lý đăng nhập thành công
-        handleLogin(data);
-      }
-    } catch (error) {
-      console.error('Google login failed:', error);
-    }
-  };
-  
-  const handleFacebookLogin = async () => {
-    try {
-      // Khởi tạo Facebook SDK
-      const fbResponse = await new Promise((resolve) => {
-        window.FB.login((response) => resolve(response), {
-          scope: 'email,public_profile'
-        });
-      });
-  
-      if (fbResponse.status === 'connected') {
-        const userData = await new Promise((resolve) => {
-          window.FB.api('/me', { fields: 'name,email' }, (response) => resolve(response));
-        });
-  
-        // Gọi API đăng nhập Facebook
-        const response = await fetch('/api/auth/facebook', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            email: userData.email,
-            name: userData.name,
-            facebookId: fbResponse.authResponse.userID
-          })
-        });
-  
-        if (response.ok) {
-          const data = await response.json();
-          // Xử lý đăng nhập thành công
-          handleLogin(data);
-        }
-      }
-    } catch (error) {
-      console.error('Facebook login failed:', error);
-    }
-  };
   return (
     <>
       <Backdrop
@@ -127,33 +56,41 @@ const Login = () => {
       <Grid container sx={{ 
         minHeight: '100vh', 
         bgcolor: '#f5f5f5',
-        backgroundImage: 'url("..//image/login_background.jpg")',
+        backgroundImage: {
+          xs: 'linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)), url("../../../../public/image/login_background.jpg")',
+          md: 'url("../../../../public/image/login_background.jpg")'
+        },
         backgroundSize: 'cover',
         backgroundPosition: 'center'
       }}>
-        <Grid item xs={6} />
+        <Grid item xs={12} md={6} lg={6} sx={{ display: { xs: 'none', md: 'block' } }} />
 
-        <Grid item xs={6} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <Grid item xs={12} md={6} lg={6} sx={{ 
+          display: 'flex', 
+          justifyContent: 'center', 
+          alignItems: 'center',
+          p: { xs: 2, sm: 4 }
+        }}>
           <Box sx={{
             width: '100%',
-            maxWidth: 400,
-            bgcolor: 'rgba(255, 255, 255, 0.8)',
+            maxWidth: { xs: '95%', sm: 400 },
+            bgcolor: 'rgba(255, 255, 255, 0.9)',
             borderRadius: 2,
-            p: 4,
+            p: { xs: 3, sm: 4 },
             boxShadow: '0 0 10px rgba(0,0,0,0.1)',
             mx: 'auto'
           }}>
-            <Typography sx={{fontSize: "20px", fontWeight: 600, mb: 3, color: '#333'}}>
+            <Typography sx={{fontSize: { xs: "18px", sm: "20px" }, fontWeight: 600, mb: 3, color: '#333'}}>
               Đăng nhập
             </Typography>
 
             {error && (
               <Alert severity="error" sx={{ mb: 2 }}>
-                {error.message || error} {/* Sửa chỗ này */}
+                {error.message || error}
               </Alert>
             )}
             <form onSubmit={handleSubmit}>
-              <Typography variant="body1" sx={{ color: '#555' }}>
+              <Typography variant="body1" sx={{ color: '#555', fontSize: { xs: '14px', sm: '16px' } }}>
                 Nhập SDT hoặc Địa chỉ email:
               </Typography>
               <TextField
@@ -164,9 +101,10 @@ const Login = () => {
                 onChange={handleChange}
                 margin="normal"
                 sx={{ mb: 1, bgcolor: 'rgba(255, 255, 255, 0.9)' }}
+                size="small"
               />
 
-              <Typography variant="body1" sx={{ color: '#555' }}>
+              <Typography variant="body1" sx={{ color: '#555', fontSize: { xs: '14px', sm: '16px' } }}>
                 Mật Khẩu:
               </Typography>
               <TextField
@@ -178,10 +116,11 @@ const Login = () => {
                 onChange={handleChange}
                 margin="normal"
                 sx={{ mb: 1, bgcolor: 'rgba(255, 255, 255, 0.9)' }}
+                size="small"
               />
 
               <Link
-                to="/forgot-password"
+                to="/auth/user/forgot-password"  // Update this line
                 style={{ 
                   color: '#0066cc',
                   textDecoration: 'none',
@@ -201,7 +140,7 @@ const Login = () => {
                 sx={{
                   bgcolor: '#333',
                   color: 'white',
-                  py: 1.5,
+                  py: { xs: 1, sm: 1.5 },
                   mb: 2,
                   '&:hover': {
                     bgcolor: '#555'
@@ -215,7 +154,9 @@ const Login = () => {
                 display: 'flex', 
                 justifyContent: 'center', 
                 alignItems: 'center',
-                mb: 2 
+                mb: 2,
+                flexDirection: { xs: 'column', sm: 'row' },
+                gap: { xs: 1, sm: 0 }
               }}>
                 <Typography variant="body2" sx={{ color: '#666' }}>
                   Chưa có tài khoản? 
@@ -232,24 +173,6 @@ const Login = () => {
                   Đăng ký ngay
                 </Link>
               </Box>
-              <Button
-                fullWidth
-                variant="outlined"
-                startIcon={<GoogleIcon />}
-                onClick={handleGoogleLogin}
-                sx={{ mb: 1, color: '#333', borderColor: '#ccc' }}
-              >
-                Đăng nhập gmail
-              </Button>
-              <Button
-                fullWidth
-                variant="outlined"
-                startIcon={<FacebookIcon />}
-                onClick={handleFacebookLogin}
-                sx={{ color: '#333', borderColor: '#ccc' }}
-              >
-                Đăng nhập facebook
-              </Button>
             </form>
           </Box>
         </Grid>
