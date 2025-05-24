@@ -11,7 +11,7 @@ import { useProduct } from "../../../hooks/useProduct";
 import { useCart } from "../../../hooks/useCart";
 import { useAuth } from "../../../hooks/useAuth";
 import ProductTemplate from "../../../components/templates/ProductTemplate";
-import ProductItem from "../../../component/main_component/productItem";
+import ProductItem from "../../../component/main_component/ProductItem";
 
 const ProductDetail = () => {
   const { id } = useParams();
