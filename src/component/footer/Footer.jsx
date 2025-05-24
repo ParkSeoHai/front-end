@@ -99,7 +99,7 @@ const Footer = () => {
           </Link>
           
           <Box component="img" 
-            src="../../../public/image/image-footer-1.png" 
+            src="/image/image-footer-1.png" 
             alt="Đã thông báo Bộ Công Thương"
             sx={{ 
             width: 150,
@@ -273,7 +273,7 @@ const Footer = () => {
             Bằng cách nhấp vào nút Đăng ký, bạn đồng ý với Chính sách bảo mật và cookie của chúng tôi.
           </Typography>
           <Box component="img" 
-            src="../../../public/image/image-footer-1.png" 
+            src="/image/image-footer-1.png" 
             alt="Đã thông báo Bộ Công Thương"
             sx={{ 
               width: 150,

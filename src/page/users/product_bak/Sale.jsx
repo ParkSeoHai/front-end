@@ -182,7 +182,7 @@ const Sales = () => {
                 }}
               >
                 <img
-                  src={`../../../../public/image/${image}`}
+                  src={`..//image/${image}`}
                   alt={`Image ${index + 1}`}
                 />
               </Box>

@@ -29,7 +29,7 @@ const PolicyLinks = () => {
               <img
                 width={32}
                 height={29}
-                src="../../../../public/image/map_nav.png"
+                src="..//image/map_nav.png"
                 alt="Hệ thống cửa hàng"
               />
               <Typography
@@ -54,7 +54,7 @@ const PolicyLinks = () => {
               <img
                 width={32}
                 height={29}
-                src="../../../../public/image/tranform_nav.png"
+                src="..//image/tranform_nav.png"
                 alt="Thông tin vận chuyển"
               />
               <Typography
@@ -79,7 +79,7 @@ const PolicyLinks = () => {
               <img
                 width={32}
                 height={29}
-                src="../../../../public/image/policy_nav.png"
+                src="..//image/policy_nav.png"
                 alt="Chính sách tích điểm"
               />
               <Typography

@@ -177,7 +177,7 @@ const ProductDetail = () => {
                   onClick={() => setMainImage(image)}
                 >
                   <img
-                    src={`http://localhost:8080${image}`}
+                    src={`https://back-end-gray-pi.vercel.app${image}`}
                     alt={`Product thumbnail ${index + 1}`}
                     style={{
                       width: "100%",
@@ -196,7 +196,7 @@ const ProductDetail = () => {
             }}>
               {mainImage && (
                 <img
-                  src={`http://localhost:8080${mainImage}`}
+                  src={`https://back-end-gray-pi.vercel.app${mainImage}`}
                   alt="Main product image"
                   style={{
                     width: "100%",
@@ -517,7 +517,7 @@ const ProductDetail = () => {
               <Box sx={{ p: 2, borderTop: "1px solid #ddd" }}>
                 <Box
                   component="img"
-                  src="../../../../public/image/size.jpg"
+                  src="..//image/size.jpg"
                   alt="Bảng size chart"
                   sx={{
                     width: "100%",

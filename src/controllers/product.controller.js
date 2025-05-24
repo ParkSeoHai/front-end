@@ -18,7 +18,7 @@ const productController = {
         const productObj = product.toObject();
         if (productObj.HinhAnh && productObj.HinhAnh.length > 0) {
           productObj.HinhAnh = productObj.HinhAnh.map(imageUrl => 
-            `http://localhost:8080${imageUrl}`
+            `https://back-end-gray-pi.vercel.app${imageUrl}`
           );
         }
         return productObj;

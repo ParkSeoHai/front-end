@@ -701,7 +701,7 @@ const Dashboard = () => {
                                 <Box key={index} sx={{ display: 'flex', alignItems: 'center' }}>
                                   <Box
                                     component="img"
-                                    src={`http://localhost:8080${product.image}`}
+                                    src={`https://back-end-gray-pi.vercel.app${product.image}`}
                                     alt={product.name}
                                     sx={{
                                       width: 30,

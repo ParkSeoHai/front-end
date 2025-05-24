@@ -58,7 +58,7 @@ const productCategoryController = {
       const categoriesWithFullImageUrls = categories.map(category => {
         const categoryObj = category.toObject();
         if (categoryObj.HinhAnh) {
-          categoryObj.HinhAnh = `http://localhost:8080${categoryObj.HinhAnh}`;
+          categoryObj.HinhAnh = `https://back-end-gray-pi.vercel.app${categoryObj.HinhAnh}`;
         }
         return categoryObj;
       });
@@ -84,7 +84,7 @@ const productCategoryController = {
       // Add full image URL
       const categoryObj = category.toObject();
       if (categoryObj.HinhAnh) {
-        categoryObj.HinhAnh = `http://localhost:8080${categoryObj.HinhAnh}`;
+        categoryObj.HinhAnh = `https://back-end-gray-pi.vercel.app${categoryObj.HinhAnh}`;
       }
       res.json(categoryObj);
     } catch (error) {
@@ -125,7 +125,7 @@ const productCategoryController = {
           categoryData.HinhAnh = `/uploads/categories/${uniqueFilename}`;
         } else if (categoryData.HinhAnh.startsWith('http')) {
           // If it's an existing URL, remove the base URL
-          categoryData.HinhAnh = categoryData.HinhAnh.replace('http://localhost:8080', '');
+          categoryData.HinhAnh = categoryData.HinhAnh.replace('https://back-end-gray-pi.vercel.app', '');
         }
       }
 

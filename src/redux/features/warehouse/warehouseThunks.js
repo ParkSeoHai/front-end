@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const BASE_URL = 'http://localhost:8080/api/warehouse';
+const BASE_URL = 'https://back-end-gray-pi.vercel.app/api/warehouse';
 
 // Helper function to get auth header
 const getAuthHeader = () => ({

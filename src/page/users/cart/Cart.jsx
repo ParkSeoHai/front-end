@@ -156,7 +156,7 @@ const Cart = () => {
                       <TableRow key={`${cartItem.idSanPham}-${cartItem.KichThuoc?.TenKichThuoc}`}>
                         <TableCell sx={{ padding: { xs: 1, sm: 2 } }}>
                           <img
-                            src={`http://localhost:8080${cartItem?.HinhAnh}`}
+                            src={`https://back-end-gray-pi.vercel.app${cartItem?.HinhAnh}`}
                             alt={cartItem?.TenSanPham}
                             width={80}
                             height={80}
@@ -258,7 +258,7 @@ const Cart = () => {
                 >
                   <Box sx={{ display: 'flex', gap: 2 }}>
                     <img
-                      src={`http://localhost:8080${cartItem?.HinhAnh}`}
+                      src={`https://back-end-gray-pi.vercel.app${cartItem?.HinhAnh}`}
                       alt={cartItem?.TenSanPham}
                       style={{ 
                         width: '100px',

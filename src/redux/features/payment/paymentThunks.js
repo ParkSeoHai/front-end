@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const BASE_URL = 'http://localhost:8080/api';
+const BASE_URL = 'https://back-end-gray-pi.vercel.app/api';
 
 export const createPaypalPayment = createAsyncThunk(
   'payment/createPaypalPayment',

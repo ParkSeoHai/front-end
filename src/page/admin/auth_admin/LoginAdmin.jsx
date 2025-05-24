@@ -75,7 +75,7 @@ const LoginAdmin = () => {
       <Grid container sx={{ 
         minHeight: '100vh', 
         bgcolor: '#f5f5f5',
-        backgroundImage: 'url("../../../../public/image/login_background.jpg")',
+        backgroundImage: 'url("..//image/login_background.jpg")',
         backgroundSize: 'cover',
         backgroundPosition: 'center'
       }}>

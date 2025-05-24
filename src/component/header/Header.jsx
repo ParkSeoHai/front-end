@@ -289,7 +289,7 @@ const handleExpandMenu = (index) => {
               }}
             >
               <img
-                src="../../../public/image/logo_main.jpg"
+                src="/image/logo_main.jpg"
                 width={77}
                 height={44}
               />
@@ -425,7 +425,7 @@ const handleExpandMenu = (index) => {
               }}
             >
               <img
-                src="../../../public/image/logo_main.jpg"
+                src="/image/logo_main.jpg"
                 width={61}
                 height={38}
               />
@@ -665,7 +665,7 @@ const handleExpandMenu = (index) => {
                       >
                         <Box sx={{ width: 80, height: 80, flexShrink: 0 }}>
                           <img
-                            src={`http://localhost:8080${item.HinhAnh}`}
+                            src={`https://back-end-gray-pi.vercel.app${item.HinhAnh}`}
                             alt={item.TenSanPham}
                             style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                           />

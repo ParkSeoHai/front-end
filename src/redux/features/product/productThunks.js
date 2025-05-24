@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const BASE_URL = 'http://localhost:8080/api';
+const BASE_URL = 'https://back-end-gray-pi.vercel.app/api';
 
 export const fetchProducts = createAsyncThunk(
   'products/fetchProducts',
@@ -127,7 +127,7 @@ export const updateProduct = createAsyncThunk(
               return imagePath;
             }
             // Convert URL to base64
-            const response = await fetch(`http://localhost:8080${imagePath}`);
+            const response = await fetch(`https://back-end-gray-pi.vercel.app${imagePath}`);
             const blob = await response.blob();
             return new Promise((resolve, reject) => {
               const reader = new FileReader();
